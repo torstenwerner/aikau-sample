@@ -4,7 +4,8 @@ model.jsonModel = {
         "alfresco/services/LogoutService",
         "alfresco/services/DocumentService",
         "alfresco/services/ActionService",
-        "alfresco/services/UploadService"
+        "alfresco/services/UploadService",
+        "alfresco/services/DialogService"
     ],
     widgets: [
         {
