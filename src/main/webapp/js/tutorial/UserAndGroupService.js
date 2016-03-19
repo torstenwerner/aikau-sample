@@ -3,7 +3,7 @@ define(["dojo/_base/declare",
         "dojo/_base/lang",
         "alfresco/core/CoreXhr",
         "service/constants/Default"],
-    function(declare, Core, lang, CoreXhr, AlfConstants) {
+    function (declare, Core, lang, CoreXhr, AlfConstants) {
 
         return declare([Core, CoreXhr], {
 
@@ -11,6 +11,7 @@ define(["dojo/_base/declare",
                 lang.mixin(this, args);
                 this.alfSubscribe("TUTORIAL_CREATE_GROUP", lang.hitch(this, this.createGroup));
                 this.alfSubscribe("TUTORIAL_ADD_USER_TO_GROUP", lang.hitch(this, this.addUserToGroup));
+                this.alfSubscribe("TUTORIAL_REMOVE_USER_FROM_GROUP", lang.hitch(this, this.removeUserFromGroup));
             },
 
             createGroup: function tutorial_UserAndGroupService__createGroup(payload) {
@@ -37,10 +38,21 @@ define(["dojo/_base/declare",
                 });
             },
 
+            removeUserFromGroup: function tutorial_UserAndGroupService__removeUserFromGroup(payload) {
+                this.serviceXhr({
+                    url: AlfConstants.PROXY_URI + "api/groups/" + payload.groupId + "/children/" + payload.shortName,
+                    method: "DELETE",
+                    data: {
+                        pubSubScope: payload.pubSubScope
+                    },
+                    successCallback: this.onSuccess,
+                    callbackScope: this
+                });
+            },
+
             onSuccess: function tutorial_UserAndGroupService__onSuccess(response, originalRequestConfig) {
                 var pubSubScope = lang.getObject("data.pubSubScope", false, originalRequestConfig);
-                if (pubSubScope == null)
-                {
+                if (pubSubScope == null) {
                     pubSubScope = "";
                 }
                 this.alfPublish(pubSubScope + "ALF_DOCLIST_RELOAD_DATA");

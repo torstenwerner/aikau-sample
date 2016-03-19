@@ -1,13 +1,10 @@
 var options = [];
 var result = remote.call("/api/people?filter=");
-if (result.status.code == status.STATUS_OK)
-{
+if (result.status.code == status.STATUS_OK) {
     var rawData = JSON.parse(result);
-    if (rawData && rawData.people)
-    {
+    if (rawData && rawData.people) {
         var people = rawData.people;
-        for (var i=0; i<people.length; i++)
-        {
+        for (var i = 0; i < people.length; i++) {
             options.push({
                 value: people[i].userName,
                 label: people[i].firstName + " " + people[i].lastName + " (" + people[i].userName + ")"
@@ -157,6 +154,26 @@ model.jsonModel = {
                                                                                                                         }
                                                                                                                     ]
                                                                                                                 }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                name: "alfresco/lists/views/layouts/Cell",
+                                                                                                                config: {
+                                                                                                                    widgets: [
+                                                                                                                        {
+                                                                                                                            name: "alfresco/renderers/PublishAction",
+                                                                                                                            config: {
+                                                                                                                                iconClass: "delete-16",
+                                                                                                                                publishTopic: "TUTORIAL_REMOVE_USER_FROM_GROUP",
+                                                                                                                                publishPayload: {
+                                                                                                                                    pubSubScope: "GROUP_USERS_",
+                                                                                                                                    groupId: "{shortName}"
+                                                                                                                                },
+                                                                                                                                publishPayloadItemMixin: true,
+                                                                                                                                publishGlobal: true
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                                }
                                                                                                             }
                                                                                                         ]
                                                                                                     }
@@ -169,6 +186,29 @@ model.jsonModel = {
                                                                         }
                                                                     ]
                                                                 }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                name: "alfresco/lists/views/layouts/Cell",
+                                                config: {
+                                                    widgets: [
+                                                        {
+                                                            name: "alfresco/renderers/PublishAction",
+                                                            config: {
+                                                                iconClass: "delete-16",
+                                                                publishTopic: "ALF_CRUD_DELETE",
+                                                                publishPayloadType: "PROCESS",
+                                                                publishPayloadModifiers: ["processCurrentItemTokens"],
+                                                                publishPayload: {
+                                                                    url: "api/groups/{shortName}",
+                                                                    requiresConfirmation: true,
+                                                                    confirmationTitle: "Delete {displayName}?",
+                                                                    confirmationPrompt: "Are you sure you want to delete {displayName}?"
+                                                                },
+                                                                publishGlobal: true
                                                             }
                                                         }
                                                     ]
