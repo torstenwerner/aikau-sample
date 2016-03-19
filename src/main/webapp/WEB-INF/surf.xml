@@ -1,18 +1,18 @@
 <alfresco-config>
-   
-   <config replace="true">
-      <flags>
-         <!--  Ensure that we're running in debug mode for unit testing -->
-         <client-debug>true</client-debug>
-         <client-debug-autologging>false</client-debug-autologging>
-      </flags>
-   </config>
-   
+
+    <config replace="true">
+        <flags>
+            <!--  Ensure that we're running in debug mode for unit testing -->
+            <client-debug>true</client-debug>
+            <client-debug-autologging>false</client-debug-autologging>
+        </flags>
+    </config>
+
     <config evaluator="string-compare" condition="WebFramework">
         <web-framework>
-           <!-- This overrides the default implementation for the Component type. By default Surf uses
-                org.springframework.extensions.surf.types.ComponentImpl which does not support the
-                concept of Sub-Components which were introduced into Surf to support Alfresco 4.0 -->
+            <!-- This overrides the default implementation for the Component type. By default Surf uses
+                 org.springframework.extensions.surf.types.ComponentImpl which does not support the
+                 concept of Sub-Components which were introduced into Surf to support Alfresco 4.0 -->
             <object-type>
                 <id>component</id>
                 <version>1.0</version>
@@ -37,52 +37,52 @@
                 <!-- delay in seconds between checking store caches are dirty -->
                 <cache-check-delay>600</cache-check-delay>
             </persisters>
-            
+
             <defaults>
-               <!-- This sets the default persister store to use when creating and saving Surf objects -->
-               <persister>presets.persister</persister>
-                
-               <site-configuration>aikau.sample.configuration</site-configuration>
-               <user-factory>webframework.factory.user.aikau</user-factory>
+                <!-- This sets the default persister store to use when creating and saving Surf objects -->
+                <persister>presets.persister</persister>
 
-               <page-type>
-                  <id>login</id>
-                  <page-instance-id>login</page-instance-id>
-               </page-type>
-               <page-type>
-                  <id>logout</id>
-                  <page-instance-id>logout</page-instance-id>
-               </page-type>
+                <site-configuration>aikau.sample.configuration</site-configuration>
+                <user-factory>webframework.factory.user.aikau</user-factory>
 
-            <!-- Surf Chrome is rendered output that wraps Regions, Components and Sub-Components
-                 It was intended to make it easy to define Portlet style windows on the page but
-                 has only really been used to create a wrapping <DIV> element with a unique id
-                 in the page. Its use is being deprecated for the next major release of Alfresco.
+                <page-type>
+                    <id>login</id>
+                    <page-instance-id>login</page-instance-id>
+                </page-type>
+                <page-type>
+                    <id>logout</id>
+                    <page-instance-id>logout</page-instance-id>
+                </page-type>
 
-                 By specifying no value for the chrome we ensure that no chrome processing occurs
-                 (i.e. no chrome is rendered around the Surf objects).-->
+                <!-- Surf Chrome is rendered output that wraps Regions, Components and Sub-Components
+                     It was intended to make it easy to define Portlet style windows on the page but
+                     has only really been used to create a wrapping <DIV> element with a unique id
+                     in the page. Its use is being deprecated for the next major release of Alfresco.
+
+                     By specifying no value for the chrome we ensure that no chrome processing occurs
+                     (i.e. no chrome is rendered around the Surf objects).-->
                 <region-chrome></region-chrome>
                 <component-chrome></component-chrome>
                 <sub-component-chrome></sub-component-chrome>
             </defaults>
-            
+
             <!-- This option enables advanced dependency management and ensures that all dependency request
                  URLs include a checksum suffix that uniquely identifies their contents. This option is disabled
                  in Alfresco versions up to 4.x but will be enabled in future versions. The <@ouputJavaScript>
                  and <@ouputCSS> directives will ONLY be available to templates when this is set to true. -->
             <use-checksum-dependencies>true</use-checksum-dependencies>
-            
+
             <!-- This option enables images referenced by CSS files to be encoded directly within the CSS file to
                  reduce the number of HTTP requests made by a page (and therefore improve page loading performance).
                  This feature is disabled in Alfresco versions up to 4.x but will be enabled in future versions. -->
             <generate-css-data-images>true</generate-css-data-images>
-            
+
             <!-- This option enables multiple dependency files of the same type (i.e. JavaScript or CSS) to be aggregated
                  into a single request. Enabling this feature will reduce the number of HTTP requests made by the 
                  page to improve page loading performance. This feature is currently disabled in all versions of Alfresco
                  and there are no plans to enable it by default yet -->
-           <aggregate-dependencies>true</aggregate-dependencies>
-            
+            <aggregate-dependencies>true</aggregate-dependencies>
+
             <!-- This option can be used to disable the processing of WebScript *.head.ftl files that were used in Alfresco 
                  versions up to 4.x to register JavaScript and CSS dependency files to be imported. This is enabled by 
                  default in Surf and there are no plans to disable it in Alfresco by default, although doing so will improve
@@ -95,22 +95,22 @@
 
             <!-- This ensures that modules (including the Aikau modules) can auto-deploy -->
             <module-deployment>
-               <mode>manual</mode>
-               <enable-auto-deploy-modules>true</enable-auto-deploy-modules>
+                <mode>manual</mode>
+                <enable-auto-deploy-modules>true</enable-auto-deploy-modules>
             </module-deployment>
 
             <!-- This is the Dojo configuration settings for Surf -->
             <dojo-pages>
-               <!-- This indicates that Dojo page support is on - this means that the Dojo
-                    dependency handler bean will be checked by the ResourceController and that
-                    the relevant FreeMarker directives will be made available to WebScripts -->
-               <enabled>true</enabled>
-               <loader-trace-enabled>false</loader-trace-enabled>
-               <messages-object>Alfresco</messages-object>
-               <packages>
-                   <!-- Add custom packages here -->
-                   <package name="tutorial" location="js/tutorial"/>
-               </packages>
+                <!-- This indicates that Dojo page support is on - this means that the Dojo
+                     dependency handler bean will be checked by the ResourceController and that
+                     the relevant FreeMarker directives will be made available to WebScripts -->
+                <enabled>true</enabled>
+                <loader-trace-enabled>false</loader-trace-enabled>
+                <messages-object>Alfresco</messages-object>
+                <packages>
+                    <!-- Add custom packages here -->
+                    <package name="tutorial" location="js/tutorial"/>
+                </packages>
             </dojo-pages>
         </web-framework>
     </config>
@@ -122,34 +122,35 @@
     -->
     <config evaluator="string-compare" condition="UriTemplate">
         <uri-templates>
-           <uri-template id="remote-node-page">/{pageid}/p/{pagename}/{store_type}/{store_id}/{id}</uri-template>
-           <uri-template id="remote-site-page">/site/{site}/{pageid}/p/{pagename}</uri-template>
-           <uri-template id="remote-page">/{pageid}/p/{pagename}</uri-template>
-           <uri-template id="sitepage">/site/{site}/{pageid}/ws/{webscript}</uri-template>
-           <uri-template id="userpage">/user/{userid}/{pageid}/ws/{webscript}</uri-template>
-           <uri-template id="page">/{pageid}/ws/{webscript}</uri-template>
+            <uri-template id="remote-node-page">/{pageid}/p/{pagename}/{store_type}/{store_id}/{id}</uri-template>
+            <uri-template id="remote-site-page">/site/{site}/{pageid}/p/{pagename}</uri-template>
+            <uri-template id="remote-page">/{pageid}/p/{pagename}</uri-template>
+            <uri-template id="sitepage">/site/{site}/{pageid}/ws/{webscript}</uri-template>
+            <uri-template id="userpage">/user/{userid}/{pageid}/ws/{webscript}</uri-template>
+            <uri-template id="nodeRefPage">/{pageid}/ws/{webscript}/{store_type}/{store_id}/{id}</uri-template>
+            <uri-template id="page">/{pageid}/ws/{webscript}</uri-template>
         </uri-templates>
-   </config>
+    </config>
 
-   <config evaluator="string-compare" condition="Remote">
-     <remote>
-        <endpoint>
-           <id>alfresco-noauth</id>
-           <name>Alfresco - unauthenticated access</name>
-           <description>Access to Alfresco Repository WebScripts that do not require authentication</description>
-           <connector-id>alfresco</connector-id>
-           <endpoint-url>http://baua-cb-alf501.westernacher.com:8080/alfresco/s</endpoint-url>
-           <identity>none</identity>
-        </endpoint>
+    <config evaluator="string-compare" condition="Remote">
+        <remote>
+            <endpoint>
+                <id>alfresco-noauth</id>
+                <name>Alfresco - unauthenticated access</name>
+                <description>Access to Alfresco Repository WebScripts that do not require authentication</description>
+                <connector-id>alfresco</connector-id>
+                <endpoint-url>http://baua-cb-alf501.westernacher.com:8080/alfresco/s</endpoint-url>
+                <identity>none</identity>
+            </endpoint>
 
-        <endpoint>
-           <id>alfresco</id>
-           <name>Alfresco - user access</name>
-           <description>Access to Alfresco Repository WebScripts that require user authentication</description>
-           <connector-id>alfresco</connector-id>
-           <endpoint-url>http://baua-cb-alf501.westernacher.com:8080/alfresco/s</endpoint-url>
-           <identity>user</identity>
-        </endpoint>
-      </remote>
+            <endpoint>
+                <id>alfresco</id>
+                <name>Alfresco - user access</name>
+                <description>Access to Alfresco Repository WebScripts that require user authentication</description>
+                <connector-id>alfresco</connector-id>
+                <endpoint-url>http://baua-cb-alf501.westernacher.com:8080/alfresco/s</endpoint-url>
+                <identity>user</identity>
+            </endpoint>
+        </remote>
     </config>
 </alfresco-config>
