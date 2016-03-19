@@ -14,7 +14,10 @@ if (result.status.code == status.STATUS_OK) {
 }
 
 model.jsonModel = {
+    groupMemberships: user.properties["alfUserGroups"],
     services: [
+        "alfresco/services/NavigationService",
+        "alfresco/services/LogoutService",
         "alfresco/services/CrudService",
         "alfresco/services/DialogService",
         "tutorial/UserAndGroupService",
@@ -22,10 +25,42 @@ model.jsonModel = {
     ],
     widgets: [
         {
+            name: "tutorial/Header"
+        },
+        {
+            name: "alfresco/header/Warning",
+            config: {
+                renderFilterMethod: "ALL",
+                renderFilter: [
+                    {
+                        target: "groupMemberships",
+                        property: "GROUP_ALFRESCO_ADMINISTRATORS",
+                        renderOnAbsentProperty: true,
+                        values: [false]
+                    }
+                ],
+                warnings: [
+                    {
+                        message: "You must be a member of the Administrators Group to view this page",
+                        level: 3
+                    }
+                ]
+            }
+        },
+        {
             name: "alfresco/layout/HorizontalWidgets",
             config: {
                 widgetMarginLeft: "10",
                 widgetMarginRight: "10",
+                renderFilterMethod: "ALL",
+                renderFilter: [
+                    {
+                        target: "groupMemberships",
+                        property: "GROUP_ALFRESCO_ADMINISTRATORS",
+                        renderOnAbsentProperty: false,
+                        values: [true]
+                    }
+                ],
                 widgets: [
                     {
                         name: "alfresco/layout/ClassicWindow",
@@ -261,7 +296,17 @@ model.jsonModel = {
                                                                                         additionalCssClasses: "mediumpad",
                                                                                         widgets: [
                                                                                             {
-                                                                                                name: "alfresco/renderers/Selector"
+                                                                                                name: "alfresco/renderers/Selector",
+                                                                                                config: {
+                                                                                                    renderFilterMethod: "ALL",
+                                                                                                    renderFilter: [
+                                                                                                        {
+                                                                                                            property: "shortName",
+                                                                                                            values: ["ALFRESCO_ADMINISTRATORS"],
+                                                                                                            negate: true
+                                                                                                        }
+                                                                                                    ]
+                                                                                                }
                                                                                             }
                                                                                         ]
                                                                                     }
@@ -412,6 +457,14 @@ model.jsonModel = {
                                                                                                 name: "alfresco/renderers/PublishAction",
                                                                                                 config: {
                                                                                                     iconClass: "delete-16",
+                                                                                                    renderFilterMethod: "ALL",
+                                                                                                    renderFilter: [
+                                                                                                        {
+                                                                                                            property: "shortName",
+                                                                                                            values: ["ALFRESCO_ADMINISTRATORS"],
+                                                                                                            negate: true
+                                                                                                        }
+                                                                                                    ],
                                                                                                     publishTopic: "ALF_CRUD_DELETE",
                                                                                                     publishPayloadType: "PROCESS",
                                                                                                     publishPayloadModifiers: ["processCurrentItemTokens"],

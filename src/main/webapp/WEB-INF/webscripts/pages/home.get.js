@@ -1,4 +1,5 @@
 model.jsonModel = {
+    groupMemberships: user.properties["alfUserGroups"],
     services: [
         {
             name: "alfresco/services/LoggingService",

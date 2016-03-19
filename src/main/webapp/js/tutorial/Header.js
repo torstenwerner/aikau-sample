@@ -22,6 +22,21 @@ define(["dojo/_base/declare",
                                                 label: "Home",
                                                 targetUrl: "ap/ws/home"
                                             }
+                                        },
+                                        {
+                                            name: "alfresco/menus/AlfMenuBarItem",
+                                            config: {
+                                                label: "Users and Groups",
+                                                targetUrl: "ap/ws/users-and-groups",
+                                                renderFilterMethod: "ANY",
+                                                renderFilter: [
+                                                    {
+                                                        target: "groupMemberships",
+                                                        property: "GROUP_ALFRESCO_ADMINISTRATORS",
+                                                        values: [true]
+                                                    }
+                                                ]
+                                            }
                                         }
                                     ]
                                 }
