@@ -1,5 +1,18 @@
 model.jsonModel = {
     services: [
+        {
+            name: "alfresco/services/LoggingService",
+            config: {
+                loggingPreferences: {
+                    enabled: true,
+                    all: true,
+                    // all: false,
+                    // warn: true,
+                    // error: true,
+                    filter: "tutorial/HelloWorld(.*)"
+                }
+            }
+        },
         "alfresco/services/NavigationService",
         "alfresco/services/LogoutService",
         "alfresco/services/DocumentService",
@@ -14,64 +27,7 @@ model.jsonModel = {
             config: {
                 widgets: [
                     {
-                        id: "HEADER_BAR",
-                        name: "alfresco/header/Header",
-                        config: {
-                            widgets: [
-                                {
-                                    id: "APP_MENU_BAR",
-                                    name: "alfresco/header/AlfMenuBar",
-                                    align: "left",
-                                    config: {
-                                        widgets: [
-                                            {
-                                                id: "HOME",
-                                                name: "alfresco/menus/AlfMenuBarItem",
-                                                config: {
-                                                    label: "Home",
-                                                    targetUrl: "ap/ws/home"
-                                                }
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    id: "USER_MENU_BAR",
-                                    name: "alfresco/header/AlfMenuBar",
-                                    align: "right",
-                                    config: {
-                                        widgets: [
-                                            {
-                                                id: "USER_MENU",
-                                                name: "alfresco/header/AlfMenuBarPopup",
-                                                config: {
-                                                    label: "User Menu",
-                                                    widgets: [
-                                                        {
-                                                            id: "HEADER_USER_MENU",
-                                                            name: "alfresco/menus/AlfMenuGroup",
-                                                            config: {
-                                                                widgets: [
-                                                                    {
-                                                                        id: "LOGOUT",
-                                                                        name: "alfresco/header/AlfMenuItem",
-                                                                        config: {
-                                                                            label: "Logout",
-                                                                            iconClass: "alf-user-logout-icon",
-                                                                            publishTopic: "ALF_DOLOGOUT"
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            }
-                                                        }
-                                                    ]
-                                                }
-                                            }
-                                        ]
-                                    }
-                                }
-                            ]
-                        }
+                        name: "tutorial/Header"
                     },
                     {
                         id: "HEADER_TITLE_BAR",
@@ -93,12 +49,15 @@ model.jsonModel = {
                                     name: "alfresco/header/Title",
                                     align: "left",
                                     config: {
-                                        label: "Welcome to Aikau Development!",
+                                        label: "Willkommen zur Aikau-Entwicklung!",
                                         setBrowserTitle: "Home"
                                     }
                                 }
                             ]
                         }
+                    },
+                    {
+                        name: "tutorial/HelloWorld"
                     },
                     {
                         name: "alfresco/buttons/AlfButton",
@@ -121,6 +80,34 @@ model.jsonModel = {
                     }
                 ]
             }
-        }
+        },
+//        {
+//            name: "alfresco/logging/SubscriptionLog"
+//        }
+        {
+            name: "tutorial/Label"
+        },
+        {
+            name: "tutorial/Label",
+            config: {
+                label: "Good Morning",
+                additionalCssClasses: "bold"
+            }
+        },
+        {
+            name: "tutorial/Label",
+            config: {
+                additionalCssClasses: "large",
+                widgets: [
+                    {
+                        name: "alfresco/html/Label",
+                        config: {
+                            label: "<< {label} >>",
+                            additionalCssClasses: "bold {additionalCssClasses}"
+                        }
+                    }
+                ]
+            }
+        },
     ]
 };
