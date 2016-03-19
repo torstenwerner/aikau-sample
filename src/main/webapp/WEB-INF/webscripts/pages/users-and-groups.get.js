@@ -22,46 +22,155 @@ model.jsonModel = {
     ],
     widgets: [
         {
-            name: "alfresco/buttons/AlfButton",
+            name: "alfresco/menus/AlfMenuBar",
             config: {
-                label: "Create New Group",
-                publishTopic: "ALF_CREATE_FORM_DIALOG_REQUEST",
-                publishPayload: {
-                    dialogTitle: "Create Group",
-                    dialogConfirmationButtonTitle: "Create",
-                    dialogCancellationButtonTitle: "Cancel",
-                    formSubmissionTopic: "TUTORIAL_CREATE_GROUP",
-                    fixedWidth: true,
-                    widgets: [
-                        {
-                            name: "alfresco/forms/controls/TextBox",
-                            config: {
-                                fieldId: "ID",
-                                label: "Identifier",
-                                name: "groupId",
-                                description: "Enter a unique identifier for the group. Only alphanumeric characters are allowed",
-                                requirementConfig: {
-                                    initialValue: true
-                                },
-                                validationConfig: [
+                widgets: [
+                    {
+                        name: "alfresco/documentlibrary/AlfSelectDocumentListItems"
+                    },
+                    {
+                        name: "alfresco/menus/AlfMenuBarItem",
+                        config: {
+                            label: "Create New Group",
+                            publishTopic: "ALF_CREATE_FORM_DIALOG_REQUEST",
+                            publishPayload: {
+                                dialogTitle: "Create Group",
+                                dialogConfirmationButtonTitle: "Create",
+                                dialogCancellationButtonTitle: "Cancel",
+                                formSubmissionTopic: "TUTORIAL_CREATE_GROUP",
+                                fixedWidth: true,
+                                widgets: [
                                     {
-                                        validation: "regex",
-                                        regex: "^[A-Za-z0-9]+$",
-                                        errorMessage: "Alphanumeric characters only"
+                                        name: "alfresco/forms/controls/TextBox",
+                                        config: {
+                                            fieldId: "ID",
+                                            label: "Identifier",
+                                            name: "groupId",
+                                            description: "Enter a unique identifier for the group. Only alphanumeric characters are allowed",
+                                            requirementConfig: {
+                                                initialValue: true
+                                            },
+                                            validationConfig: [
+                                                {
+                                                    validation: "regex",
+                                                    regex: "^[A-Za-z0-9]+$",
+                                                    errorMessage: "Alphanumeric characters only"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        name: "alfresco/forms/controls/TextBox",
+                                        config: {
+                                            fieldId: "DISPLAYNAME",
+                                            label: "Display name",
+                                            name: "displayName"
+                                        }
                                     }
                                 ]
                             }
-                        },
-                        {
-                            name: "alfresco/forms/controls/TextBox",
-                            config: {
-                                fieldId: "DISPLAYNAME",
-                                label: "Display name",
-                                name: "displayName"
+                        }
+                    },
+                    {
+                        name: "alfresco/documentlibrary/AlfSelectedItemsMenuBarPopup",
+                        config: {
+                            passive: false,
+                            itemKeyProperty: "shortName",
+                            label: "Selected items...",
+                            widgets: [
+                                {
+                                    name: "alfresco/menus/AlfMenuGroup",
+                                    config: {
+                                        widgets: [
+                                            {
+                                                name: "alfresco/menus/AlfSelectedItemsMenuItem",
+                                                config: {
+                                                    label: "Delete",
+                                                    iconClass: "alf-delete-icon",
+                                                    clearSelectedItemsOnClick: true,
+                                                    publishTopic: "TUTORIAL_DELETE_GROUPS"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        name: "alfresco/menus/AlfMenuBarToggle",
+                        config: {
+                            checked: true,
+                            onConfig: {
+                                title: "Change sort order to descending",
+                                iconClass: "alf-sort-ascending-icon",
+                                iconAltText: "Sorted ascending",
+                                publishTopic: "ALF_DOCLIST_SORT",
+                                publishPayload: {
+                                    direction: "ascending"
+                                }
+                            },
+                            offConfig: {
+                                title: "Change sort order to ascending",
+                                iconClass: "alf-sort-descending-icon",
+                                iconAltText: "Sorted descending",
+                                publishTopic: "ALF_DOCLIST_SORT",
+                                publishPayload: {
+                                    direction: "descending"
+                                }
                             }
                         }
-                    ]
-                }
+                    },
+                    {
+                        name: "alfresco/menus/AlfMenuBarSelect",
+                        config: {
+                            title: "Sort By",
+                            selectionTopic: "ALF_DOCLIST_SORT_FIELD_SELECTION",
+                            widgets: [
+                                {
+                                    name: "alfresco/menus/AlfMenuGroup",
+                                    config: {
+                                        label: 'Sort Column',
+                                        widgets: [
+                                            {
+                                                name: "alfresco/menus/AlfCheckableMenuItem",
+                                                config: {
+                                                    label: "Identifier",
+                                                    title: "Sort By Group Identifier",
+                                                    value: "shortName",
+                                                    group: "GROUP_SORT_FIELDS",
+                                                    publishTopic: "ALF_DOCLIST_SORT_FIELD_SELECTION",
+                                                    checked: true,
+                                                    publishPayload: {
+                                                        label: "Identifier",
+                                                        direction: "ascending",
+                                                        sortable: true
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                name: "alfresco/menus/AlfCheckableMenuItem",
+                                                config: {
+                                                    label: "Display Name",
+                                                    title: "Sort By Display Name",
+                                                    value: "displayName",
+                                                    group: "GROUP_SORT_FIELDS",
+                                                    publishTopic: "ALF_DOCLIST_SORT_FIELD_SELECTION",
+                                                    checked: false,
+                                                    publishPayload: {
+                                                        label: "Display Name",
+                                                        direction: "ascending",
+                                                        sortable: true
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
             }
         },
         {
@@ -78,6 +187,12 @@ model.jsonModel = {
                         name: "alfresco/lists/views/AlfListView",
                         config: {
                             widgetsForHeader: [
+                                {
+                                    name: "alfresco/lists/views/layouts/HeaderCell",
+                                    config: {
+                                        label: ""
+                                    }
+                                },
                                 {
                                     name: "alfresco/lists/views/layouts/HeaderCell",
                                     config: {
@@ -107,6 +222,17 @@ model.jsonModel = {
                                     name: "alfresco/lists/views/layouts/Row",
                                     config: {
                                         widgets: [
+                                            {
+                                                name: "alfresco/lists/views/layouts/Cell",
+                                                config: {
+                                                    additionalCssClasses: "mediumpad",
+                                                    widgets: [
+                                                        {
+                                                            name: "alfresco/renderers/Selector"
+                                                        }
+                                                    ]
+                                                }
+                                            },
                                             {
                                                 name: "alfresco/lists/views/layouts/Cell",
                                                 config: {
