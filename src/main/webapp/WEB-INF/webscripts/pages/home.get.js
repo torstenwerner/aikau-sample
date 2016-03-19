@@ -58,57 +58,117 @@ model.jsonModel = {
                         }
                     },
                     {
-                        name: "tutorial/HelloWorld"
-                    },
-                    {
                         name: "alfresco/buttons/AlfButton",
                         config: {
                             label: "Go to parent folder",
                             iconClass: "alf-folder-up-icon",
                             publishTopic: "ALF_DOCLIST_PARENT_NAV"
                         }
-                    },{
-                        name: "alfresco/documentlibrary/AlfDocumentList",
+                    },
+                    {
+                        name: "alfresco/layout/HorizontalWidgets",
                         config: {
-                            rootNode: "alfresco://user/home",
-                            rawData: true,
                             widgets: [
                                 {
-                                    name: "alfresco/documentlibrary/views/AlfSimpleView"
+                                    name: "alfresco/documentlibrary/AlfDocumentList",
+                                    config: {
+                                        rootNode: "alfresco://user/home",
+                                        rawData: true,
+                                        widgets: [
+                                            {
+                                                name: "alfresco/lists/views/AlfListView",
+                                                config: {
+                                                    widgets: [
+                                                        {
+                                                            name: "alfresco/lists/views/layouts/Row",
+                                                            config: {
+                                                                widgets: [
+                                                                    {
+                                                                        name: "alfresco/lists/views/layouts/Cell",
+                                                                        config: {
+                                                                            additionalCssClasses: "mediumpad",
+                                                                            widgets: [
+                                                                                {
+                                                                                    name: "alfresco/renderers/PropertyLink",
+                                                                                    config: {
+                                                                                        propertyToRender: "node.properties.cm:name",
+                                                                                        publishTopic: "ALF_DOCUMENTLIST_PATH_CHANGED",
+                                                                                        publishPayloadType: "PROCESS",
+                                                                                        useCurrentItemAsPayload: false,
+                                                                                        publishPayloadModifiers: ["processCurrentItemTokens"],
+                                                                                        publishPayload: {
+                                                                                            path: "{location.path}/{location.file}"
+                                                                                        },
+                                                                                        renderFilter: [
+                                                                                            {
+                                                                                                property: "node.isContainer",
+                                                                                                values: [true]
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    name: "alfresco/renderers/PropertyLink",
+                                                                                    config: {
+                                                                                        propertyToRender: "node.properties.cm:name",
+                                                                                        publishTopic: "ALF_RETRIEVE_SINGLE_DOCUMENT_REQUEST",
+                                                                                        publishPayloadType: "PROCESS",
+                                                                                        useCurrentItemAsPayload: false,
+                                                                                        publishPayloadModifiers: ["processCurrentItemTokens"],
+                                                                                        publishPayload: {
+                                                                                            nodeRef: "{node.nodeRef}",
+                                                                                            rawData: true
+                                                                                        },
+                                                                                        renderFilter: [
+                                                                                            {
+                                                                                                property: "node.isContainer",
+                                                                                                values: [false]
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    name: "alfresco/documentlibrary/AlfDocument",
+                                    config: {
+                                        nodeRef: null,
+                                        rawData: true,
+                                        widgets: [
+                                            {
+                                                name: "alfresco/preview/AlfDocumentPreview",
+                                                config: {
+                                                    widgetsForPluginsOverrides: [
+                                                        {
+                                                            id: "PdfJs",
+                                                            replace: true,
+                                                            name: "alfresco/preview/PdfJs/PdfJs",
+                                                            config: {}
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
                                 }
                             ]
                         }
                     }
                 ]
             }
-        },
+        }
 //        {
 //            name: "alfresco/logging/SubscriptionLog"
 //        }
-        {
-            name: "tutorial/Label"
-        },
-        {
-            name: "tutorial/Label",
-            config: {
-                label: "Good Morning",
-                additionalCssClasses: "bold"
-            }
-        },
-        {
-            name: "tutorial/Label",
-            config: {
-                additionalCssClasses: "large",
-                widgets: [
-                    {
-                        name: "alfresco/html/Label",
-                        config: {
-                            label: "<< {label} >>",
-                            additionalCssClasses: "bold {additionalCssClasses}"
-                        }
-                    }
-                ]
-            }
-        },
     ]
 };
