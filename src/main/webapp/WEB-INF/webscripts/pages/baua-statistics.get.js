@@ -1,5 +1,6 @@
 model.jsonModel = {
     services: [
+        'baua/StatisticsService',
         {
             name: "alfresco/services/LoggingService",
             config: {
@@ -8,15 +9,21 @@ model.jsonModel = {
                     // all: true,
                     all: false,
                     warn: true,
-                    error: true
+                    error: true //,
                     //filter: "tutorial/HelloWorld(.*)"
                 }
             }
-        },
-        "tutorial/StatisticsService"
+        }
     ],
-    widgets: [{
-        name: 'tutorial/TableWidget'
-    }
+    widgets: [
+        {
+            name: "alfresco/header/SetTitle",
+            config: {
+                title: "BAuA-Online-Autorensystem"
+            }
+        },
+        {
+            name: 'baua/TableWidget'
+        }
     ]
 };

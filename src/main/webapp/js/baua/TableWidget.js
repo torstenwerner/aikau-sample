@@ -6,7 +6,7 @@ define(["dojo/_base/declare",
         "alfresco/core/ProcessWidgets"],
     function (declare, ProcessWidgets) {
 
-        var cellPadding = "mediumpad";
+        var cellPadding = "smallpad";
         return declare([ProcessWidgets], {
             widgets: [
                 {
@@ -14,7 +14,7 @@ define(["dojo/_base/declare",
                     config: {
                         loadDataPublishTopic: "STATISTICS_GET",
                         itemsProperty: "records",
-                        sortField: "material",
+                        sortField: "index",
                         currentPageSize: 50,
                         startIndexProperty: "paging.skipCount",
                         totalResultsProperty: "paging.totalItems",

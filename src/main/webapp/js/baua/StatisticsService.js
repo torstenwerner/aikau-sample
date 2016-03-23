@@ -10,11 +10,11 @@ define(["dojo/_base/declare",
     function (declare, Core, lang, CoreXhr, AlfConstants) {
 
         function get(payload) {
-            console.log(payload);
-
             var alfTopic =
                 (payload.alfResponseTopic != null) ? payload.alfResponseTopic : "";
 
+            // Todo remove console log if sort direction works
+            console.log("sortAscending: " + payload.sortAscending);
             var sortDir =
                 (payload.sortAscending != null && payload.sortAscending === true) ? "asc" : "desc";
 

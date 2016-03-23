@@ -110,6 +110,7 @@
                 <packages>
                     <!-- Add custom packages here -->
                     <package name="tutorial" location="js/tutorial"/>
+                    <package name="baua" location="js/baua"/>
                 </packages>
             </dojo-pages>
         </web-framework>
